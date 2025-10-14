@@ -321,9 +321,12 @@
         
         <div class="error-screen" id="errorScreen">
             <div class="error-icon">🔒</div>
-            <div class="error-title">Вы не авторизованы</div>
+            <div class="error-title">Нужна авторизация!</div>
             <div class="error-message">
-                Авторизируйтесь с помощью инструкции, которую вам дал бот
+                💆 Открылась ссылка на бот<br>
+                🐈 Напишите боту /start<br>
+                📞 Поделитесь контактом и введите код<br>
+                🎁 Вернитесь сюда и заберите подарок!
             </div>
         </div>
     </div>
@@ -410,13 +413,8 @@
             // Проверяем авторизацию (пока всегда показываем ошибку для демонстрации)
             if (!params.authorized) {
                 showAuthError();
-                // Отправляем данные в Telegram
-                tg.sendData(JSON.stringify({
-                    action: 'claim_gift',
-                    gift_id: params.gift_id,
-                    user_id: tg.initDataUnsafe?.user?.id,
-                    authorized: false
-                }));
+                // Перенаправляем к боту для авторизации
+                window.open(`https://t.me/GiftRooms_bot?start=gift_${params.gift_id}`, '_blank');
                 return;
             }
             
