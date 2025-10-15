@@ -3,471 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎁 Вам подарок!</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Gift Claim</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
+            margin: 0;
             padding: 20px;
-        }
-
-        .gift-container {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #e0e0e0;
             text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            max-width: 450px;
-            width: 100%;
-            animation: slideIn 0.8s ease-out;
+            min-height: 100vh;
         }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .gift-image {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 2rem;
-            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
-            background-size: 400% 400%;
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: rgba(30,30,50,0.8);
+            padding: 30px;
             border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            animation: 
-                gradientShift 3s ease-in-out infinite,
-                glow 2s ease-in-out infinite alternate;
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.3),
-                0 5px 15px rgba(255, 107, 107, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.1);
         }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            25% { background-position: 100% 50%; }
-            50% { background-position: 100% 100%; }
-            75% { background-position: 0% 100%; }
+        .gift-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
         }
-
-        @keyframes glow {
-            from { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 5px 15px rgba(255, 107, 107, 0.2); }
-            to { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 5px 25px rgba(78, 205, 196, 0.4); }
-        }
-
-        .gift-title {
-            font-size: 2.2rem;
+        .gift-name {
+            font-size: 24px;
             font-weight: bold;
-            margin-bottom: 2rem;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: textGlow 2s ease-in-out infinite alternate;
+            margin-bottom: 10px;
         }
-
-        @keyframes textGlow {
-            from { filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.3)); }
-            to { filter: drop-shadow(0 0 20px rgba(78, 205, 196, 0.5)); }
+        .gift-from {
+            font-size: 16px;
+            opacity: 0.8;
+            margin-bottom: 30px;
         }
-
-        .gift-details {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: left;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .detail-row:last-child {
-            margin-bottom: 0;
-            border-bottom: none;
-        }
-
-        .detail-label {
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-        }
-
-        .detail-value {
-            font-weight: 700;
-            color: #4ecdc4;
-            font-size: 1rem;
-        }
-
-        .claim-instruction {
-            font-size: 1.1rem;
-            margin: 2rem 0 1.5rem 0;
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.4;
-        }
-
-        .claim-button {
-            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
-            color: white;
+        .claim-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8a80);
             border: none;
-            padding: 18px 40px;
+            padding: 15px 40px;
             border-radius: 50px;
-            font-size: 1.3rem;
-            font-weight: 700;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 
-                0 10px 30px rgba(255, 107, 107, 0.3),
-                0 3px 10px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             width: 100%;
-            animation: pulse 2s infinite;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(255,107,107,0.3);
         }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+        .claim-btn:hover {
+            background: linear-gradient(45deg, #ff5252, #ff7061);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,107,107,0.4);
         }
-
-        .claim-button:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 
-                0 15px 40px rgba(255, 107, 107, 0.4),
-                0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .claim-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            transition: all 0.5s ease;
-            transform: translate(-50%, -50%);
-        }
-
-        .claim-button:active::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .error-screen {
+        .error-msg {
+            background: rgba(50,50,70,0.9);
+            border: 1px solid rgba(255,107,107,0.5);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
             display: none;
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255, 107, 107, 0.1);
-            border: 2px solid rgba(255, 107, 107, 0.3);
-            border-radius: 15px;
-            margin-top: 2rem;
+            backdrop-filter: blur(5px);
         }
-
-        .error-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #ff6b6b;
+        .loading {
+            display: none;
         }
-
-        .error-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            color: #ff6b6b;
-        }
-
-        .error-message {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.5;
-        }
-
-        .floating-particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            top: 0;
-            left: 0;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.6);
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.3);
             border-radius: 50%;
-            animation: float 6s linear infinite;
+            border-top: 3px solid white;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
         }
-
-        @keyframes float {
-            0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: white;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-        }
-
-        .close-btn:hover {
-            background: rgba(0, 0, 0, 0.5);
-            transform: scale(1.1);
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="floating-particles" id="particles"></div>
-    
-    <button class="close-btn" onclick="closeApp()">×</button>
-    
-    <div class="gift-container">
-        <div class="gift-image" id="giftImage">🎁</div>
+    <div class="container">
+        <div class="gift-icon">🎁</div>
+        <div class="gift-name" id="giftName">Mystery Gift</div>
+        <div class="gift-from">От: <strong>Anonymous</strong></div>
         
-        <div class="gift-title">Вам подарок!</div>
-        
-        <div class="gift-details">
-            <div class="detail-row">
-                <span class="detail-label">🆔 ID:</span>
-                <span class="detail-value" id="giftId">-</span>
-            </div>
-            <div class="detail-row">
-                <span class="detail-label">📦 Модель:</span>
-                <span class="detail-value" id="giftModel">-</span>
-            </div>
-            <div class="detail-row">
-                <span class="detail-label">🎯 Название:</span>
-                <span class="detail-value" id="giftName">-</span>
-            </div>
-            <div class="detail-row">
-                <span class="detail-label">🏷️ Тип:</span>
-                <span class="detail-value" id="giftType">-</span>
-            </div>
-            <div class="detail-row">
-                <span class="detail-label">👤 От:</span>
-                <span class="detail-value" id="senderName">-</span>
-            </div>
-        </div>
-        
-        <div class="claim-instruction">
-            Нажмите кнопку чтобы забрать в профиль!
-        </div>
-        
-        <button class="claim-button" onclick="claimGift()">
-            🎁 Забрать
+        <button class="claim-btn" onclick="claimGift()">
+            🎁 Забрать подарок
         </button>
         
-        <div class="error-screen" id="errorScreen">
-            <div class="error-icon">🔒</div>
-            <div class="error-title">Нужна авторизация!</div>
-            <div class="error-message">
-                💆 Открылась ссылка на бот<br>
-                🐈 Напишите боту /start<br>
-                📞 Поделитесь контактом и введите код<br>
-                🎁 Вернитесь сюда и заберите подарок!
-            </div>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Обрабатываем ваш подарок...</p>
+        </div>
+        
+        <div class="error-msg" id="errorMsg">
+            <h3>❌ Ошибка авторизации</h3>
+            <p>Вы не авторизованы для получения этого подарка.</p>
+            <p><strong>Инструкции отправлены в чат с ботом.</strong></p>
+            <p>Пожалуйста, вернитесь в Telegram и следуйте инструкциям.</p>
         </div>
     </div>
 
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        // Инициализация Telegram Web App
-        let tg = window.Telegram.WebApp;
-        tg.ready();
+        // Получаем параметры из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const giftName = urlParams.get('gift') || 'Mystery Gift';
+        const userId = urlParams.get('user');
         
-        // Установка цветовой схемы
-        tg.setHeaderColor('#0f0f23');
-        tg.setBackgroundColor('#0f0f23');
-
-        // Создание плавающих частиц
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.animationDelay = Math.random() * 6 + 's';
-                    particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
-                    
-                    // Случайные цвета частиц
-                    const colors = ['rgba(255, 107, 107, 0.6)', 'rgba(78, 205, 196, 0.6)', 'rgba(69, 183, 209, 0.6)'];
-                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    
-                    particlesContainer.appendChild(particle);
-                    
-                    // Удаляем частицу через 8 секунд
-                    setTimeout(() => {
-                        if (particle.parentNode) {
-                            particle.parentNode.removeChild(particle);
-                        }
-                    }, 8000);
-                }, i * 300);
-            }
-        }
-
-        // Получение параметров из URL
-        function getUrlParams() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return {
-                gift_id: urlParams.get('gift_id'),
-                name: urlParams.get('name'),
-                id: urlParams.get('id'),
-                type: urlParams.get('type'),
-                sender: urlParams.get('sender'),
-                authorized: urlParams.get('authorized') === 'true'
-            };
-        }
-
-        // Загрузка данных подарка
-        function loadGiftData() {
-            const params = getUrlParams();
-            
-            if (!params.name || !params.id) {
-                showError('Ошибка загрузки данных подарка');
-                return;
-            }
-
-            // Обновляем данные подарка
-            document.getElementById('giftId').textContent = params.id || '-';
-            document.getElementById('giftModel').textContent = params.name || '-';
-            document.getElementById('giftName').textContent = decodeURIComponent(params.name || '-');
-            document.getElementById('giftType').textContent = params.type || '-';
-            document.getElementById('senderName').textContent = decodeURIComponent(params.sender || '-');
-
-            // Устанавливаем иконку в зависимости от типа
-            const giftImage = document.getElementById('giftImage');
-            if (params.type === 'NFT') {
-                giftImage.textContent = '💎';
-            } else {
-                giftImage.textContent = '🎁';
-            }
-        }
-
-        // Функция забирания подарка
+        // Устанавливаем название подарка
+        document.getElementById('giftName').textContent = giftName;
+        
+        // Инициализируем Telegram Web App
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
+        
         function claimGift() {
-            const params = getUrlParams();
+            const btn = document.querySelector('.claim-btn');
+            const loading = document.getElementById('loading');
+            const errorMsg = document.getElementById('errorMsg');
             
-            // Проверяем авторизацию (пока всегда показываем ошибку для демонстрации)
-            if (!params.authorized) {
-                showAuthError();
-                // Перенаправляем к боту для авторизации
-                window.open(`https://t.me/GiftRooms_bot?start=gift_${params.gift_id}`, '_blank');
-                return;
-            }
+            // Показываем загрузку
+            btn.style.display = 'none';
+            loading.style.display = 'block';
             
-            // Если авторизован, забираем подарок
-            tg.sendData(JSON.stringify({
-                action: 'claim_gift',
-                gift_id: params.gift_id,
-                user_id: tg.initDataUnsafe?.user?.id,
-                authorized: true
-            }));
+            // Имитируем обработку
+            setTimeout(() => {
+                loading.style.display = 'none';
+                errorMsg.style.display = 'block';
+                
+                // Отправляем команду боту об ошибке авторизации
+                if (window.Telegram.WebApp.initDataUnsafe.user) {
+                    window.Telegram.WebApp.sendData(JSON.stringify({
+                        action: 'auth_error',
+                        user_id: userId,
+                        gift: giftName
+                    }));
+                }
+                
+                // Закрываем веб-приложение через 3 секунды
+                setTimeout(() => {
+                    window.Telegram.WebApp.close();
+                }, 3000);
+                
+            }, 2000);
         }
-
-        // Показ ошибки авторизации
-        function showAuthError() {
-            document.getElementById('errorScreen').style.display = 'block';
-        }
-
-        // Показ общей ошибки
-        function showError(message) {
-            const errorScreen = document.getElementById('errorScreen');
-            errorScreen.querySelector('.error-message').textContent = message;
-            errorScreen.style.display = 'block';
-        }
-
-        // Функция закрытия приложения
-        function closeApp() {
-            tg.close();
-        }
-
-        // Функция для непрерывного создания частиц
-        function continuousParticles() {
-            createParticles();
-            setTimeout(continuousParticles, 5000);
-        }
-
-        // Инициализация при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            loadGiftData();
-            continuousParticles();
-            
-            // Показываем кнопку "Назад" в Telegram
-            tg.BackButton.show();
-            tg.BackButton.onClick(closeApp);
-        });
-
-        // Обработка изменения темы Telegram
-        tg.onEvent('themeChanged', function() {
-            // Можно добавить логику изменения темы
-        });
-
-        // Обработка изменения viewport
-        tg.onEvent('viewportChanged', function() {
-            // Можно добавить логику адаптации под viewport
+        
+        // Обработка закрытия веб-приложения
+        window.Telegram.WebApp.onEvent('webAppDataSent', function() {
+            window.Telegram.WebApp.close();
         });
     </script>
 </body>
